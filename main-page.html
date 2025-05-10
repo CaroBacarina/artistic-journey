@@ -323,6 +323,61 @@
             margin-top: 2rem;
             font-size: .8rem;
         }
+
+        .contact-section {
+            text-align: center;
+            margin-top: 3rem;
+            background: var(--clr-surface-dark);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        body.light-mode .contact-section {
+            background: var(--clr-surface-light);
+        }
+
+        .contact-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-section h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-section p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            background: var(--clr-accent);
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .contact-button img.contact-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: var(--clr-secondary);
+            transform: translateY(-3px);
+        }
+
+        .contact-button:hover img.contact-icon {
+            transform: rotate(20deg) scale(1.2);
+        }
     </style>
 </head>
 
@@ -344,10 +399,13 @@
 
     <div class="container" id="gallery"></div>
 
-    <section style="text-align:center;margin-top:3rem;">
-        <h2 style="margin-bottom:.5rem;font-size:1.25rem;">Get in touch</h2>
-        <p>Interested in a commission or print? <a href="mailto:hello@corina-art.com"
-                style="color:var(--clr-accent);">Email Corina</a></p>
+    <section class="contact-section">
+        <h2>✨Get in Touch✨</h2>
+        <p>Interested in a commission or print?</p>
+        <a href="mailto:hello@corina-art.com" class="contact-button">
+            <img src="assets/email.png" alt="Email icon" class="contact-icon">
+            Email Corina
+        </a>
     </section>
 
     <footer>
