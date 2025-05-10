@@ -153,12 +153,12 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, .8);
+            background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
-            transition: opacity .3s ease;
+            transition: opacity 0.3s ease;
         }
 
         #image-modal.show {
@@ -166,15 +166,23 @@
             opacity: 1;
         }
 
+        #image-modal {
+            background: rgba(0, 0, 0, 0.95);
+        }
+
         #image-modal-content {
-            background: var(--clr-surface-dark);
-            padding: 1rem;
-            border-radius: 12px;
-            max-width: 95%;
-            max-height: 95%;
-            text-align: center;
-            position: relative;
-            width: clamp(300px, 80vw, 900px);
+            background: none;
+            /* remove box background */
+            padding: 0;
+            border-radius: 0;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         body.light-mode #image-modal-content {
@@ -184,32 +192,38 @@
 
         #image-modal-content img {
             max-width: 100%;
-            max-height: 45vh;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        #close-modal,
-        #prev-btn,
-        #next-btn {
-            position: absolute;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            user-select: none;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0;
         }
 
         #close-modal {
-            top: -25px;
-            right: -25px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: var(--clr-secondary);
             border-radius: 50%;
-            padding: 5px;
+            padding: 10px;
+            font-size: 2rem;
         }
 
         #prev-btn,
+        #next-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            background: none;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #prev-btn {
+            display: none;
+        }
+
         #next-btn {
             display: none;
         }
@@ -234,9 +248,20 @@
             }
         }
 
-        .music-toggle,
-        .dark-light-toggle {
-            position: fixed;
+        /* Wrap both buttons in a container */
+        .button-group {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            /* space between buttons */
+        }
+
+        /* Remove fixed position from individual buttons */
+        .dark-light-toggle,
+        .music-toggle {
+            position: static;
             background: #272727;
             border: none;
             color: #fff;
@@ -244,7 +269,6 @@
             border-radius: 50%;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-            z-index: 1200;
         }
 
         .dark-light-toggle {
@@ -269,8 +293,10 @@
     <audio id="background-music" autoplay loop>
         <source src="assets/theme.mp3" type="audio/mpeg">
     </audio>
-    <button class="music-toggle" onclick="toggleMusic()">🔇</button>
-    <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
+    <div>
+        <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
+        <button class="music-toggle" onclick="toggleMusic()">🔇</button>
+    </div>
 
     <h1>Corina’s Art Portfolio</h1>
     <div class="social-links">
@@ -288,7 +314,7 @@
     </section>
 
     <footer>
-        <p>Made with love by Corina • <span id="visits">0</span> visitors</p>
+        <p>Made with love by Corina • <span id="visits">1454</span> visitors</p>
     </footer>
 
     <div id="image-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
@@ -303,9 +329,13 @@
     </div>
 
     <script>
-        function toggleTheme() { document.body.classList.toggle('light-mode'); }
         const music = document.getElementById('background-music');
         const musicBtn = document.querySelector('.music-toggle');
+        const themeBtn = document.querySelector('.dark-light-toggle');
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
         function toggleMusic() { music.paused ? (music.play(), musicBtn.textContent = '🔊') : (music.pause(), musicBtn.textContent = '🔇'); }
 
         const images = [
