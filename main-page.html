@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="A curated collection of Corina’s animal and landscape art.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <p style="text-align:center;">
+        ✨
+        <a href="https://instagram.com/corina.art" target="_blank" style="color:#ff4081; margin: 0 10px;">Instagram</a>
+        |
+        <a href="https://etsy.com/shop/corinaart" target="_blank" style="color:#ff4081; margin: 0 10px;">Etsy</a>
+        ✨
+    </p>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #121212, #1f1f1f);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            overflow-x: hidden;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: #1e1e1e;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .dark-light-toggle,
+        .music-toggle {
+            position: fixed;
+            background: #272727;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dark-light-toggle {
+            top: 20px;
+            right: 20px;
+        }
+
+        .music-toggle {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .light-mode {
+            background: linear-gradient(135deg, #f0f0f0, #dcdcdc);
+            color: #121212;
+        }
+
+        .light-mode .card {
+            background: #ffffff;
+            color: #121212;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="background-music" autoplay loop>
+        <source src="assets/theme.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-toggle" onclick="toggleMusic()" title="Toggle music">🔇</button>
+    <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
+
+    <h1>Corina’s Art Portfolio</h1>
+    <p style="text-align:center;">A curated collection of Corina’s animal and landscape art.</p>
+
+    <div class="container" id="gallery"></div>
+
+    <footer>
+        <p>✨ Made with love by Corina ✨ | <a href="https://instagram.com/corina.art" target="_blank">Instagram</a> | <a
+                href="https://etsy.com/shop/corinaart" target="_blank">Etsy</a></p>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        const music = document.getElementById('background-music');
+        const button = document.querySelector('.music-toggle');
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                button.textContent = '🔊';
+            } else {
+                music.pause();
+                button.textContent = '🔇';
+            }
+        }
+
+        function viewImage(imageUrl) {
+            window.open(imageUrl, '_blank');
+        }
+
+        // Manually list the image filenames here:
+        const images = [
+            { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
+            { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
+            { filename: 'gallery-3.jpg', title: 'Lotus Leaves', description: 'Delicate lotus leaves and flowers on water.' },
+            { filename: 'gallery-4.jpg', title: 'Festival Scene', description: 'A lively festival with dancers and musicians.' },
+            { filename: 'gallery-5.jpg', title: 'Red Dragon', description: 'A striking red dragon with dynamic details.' },
+            { filename: 'gallery-6.jpg', title: 'Blossoming Tree', description: 'A tree in full bloom with pink flowers.' },
+            { filename: 'gallery-7.jpg', title: 'Still Life with Oranges', description: 'A soft still life composition of fruits.' },
+            { filename: 'gallery-8.jpg', title: 'Playful Cat', description: 'A bright orange cat with a playful expression.' },
+            { filename: 'gallery-9.jpg', title: 'Pink Roses', description: 'A delicate arrangement of pink roses.' },
+            { filename: 'gallery-10.jpg', title: 'Garden Cat', description: 'A cat enjoying the garden surrounded by flowers.' },
+            { filename: 'gallery-11.jpg', title: 'Field Cat', description: 'A curious cat in a sunlit meadow.' },
+            { filename: 'gallery-12.jpg', title: 'City Sunset', description: 'A dramatic sunset over a city skyline.' },
+            { filename: 'gallery-13.jpg', title: 'Monochrome Cat', description: 'A cat captured in a grayscale drawing.' },
+            { filename: 'gallery-14.jpg', title: 'Minimal Tree', description: 'A minimalist tree silhouette on white.' },
+            { filename: 'gallery-15.jpg', title: 'Forest Path', description: 'A serene path through a lush forest.' },
+            { filename: 'gallery-16.jpg', title: 'Festival Performer', description: 'A colorful festival performer portrait.' },
+            { filename: 'sarutul-1.jpg', title: 'The Kiss I', description: 'An artistic interpretation of The Kiss.' },
+            { filename: 'sarutul-2.jpg', title: 'The Kiss II', description: 'A golden romantic embrace.' },
+            { filename: 'sarutul-3.jpg', title: 'The Kiss III', description: 'A vibrant take on a classic love scene.' },
+            { filename: 'sarutul-4.jpg', title: 'The Kiss IV', description: 'A colorful mosaic of love and art.' }
+        ];
+
+        const gallery = document.getElementById('gallery');
+
+        images.forEach(img => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => viewImage(`assets/${img.filename}`);
+            card.innerHTML = `
+                <img src="assets/${img.filename}" alt="${img.title}">
+                <h3>${img.title}</h3>
+                <p>${img.description}</p>
+            `;
+            gallery.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>
