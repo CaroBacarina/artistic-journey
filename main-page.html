@@ -28,6 +28,7 @@
         }
 
         body {
+            /* zoom: 1.5; */
             font-family: 'Poppins', sans-serif;
             -webkit-font-smoothing: antialiased;
             background: linear-gradient(135deg, var(--clr-bg-dark-start), var(--clr-bg-dark-end));
@@ -152,14 +153,14 @@
 
         .description {
             text-align: center;
-            font-size: 1rem;
+            font-size: 0.5rem;
             max-width: 700px;
             margin: 0 auto;
         }
 
         .container {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -190,13 +191,14 @@
             box-shadow: 0 0 15px rgba(0, 191, 255, .6);
         }
 
+
         .card img {
             width: 100%;
-            height: 140px;
+            height: 300px;
+            /* make images taller for an IG look */
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: .5rem;
-            /* filter: blur(5px); */
             transition: filter .5s;
         }
 
@@ -220,15 +222,31 @@
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.3s ease;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
         }
 
         #image-modal.show {
             display: flex;
+            transform: scale(1 / 1.5) scale(1);
             opacity: 1;
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 200, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+        }
+
+        .zoom-wrapper {
+            transform: scale(1.5);
+            transform-origin: top left;
+            width: calc(100% / 1.5);
         }
 
         #image-modal {
             background: rgba(0, 0, 0, 0.95);
+            transform: scale(1 / 1.5);
+            transform-origin: top left;
         }
 
         #image-modal-content {
@@ -375,6 +393,7 @@
         .contact-section {
             text-align: center;
             margin-top: 3rem;
+            transform: scale(1 / 1.5) scale(1);
             background: var(--clr-surface-dark);
             padding: 2rem;
             border-radius: 12px;
@@ -384,23 +403,29 @@
 
         body.light-mode .contact-section {
             background: var(--clr-surface-light);
+            transform: scale(1 / 1.5) scale(1);
         }
 
         .contact-section:hover {
             transform: translateY(-5px);
+            transform: scale(1 / 1.5) scale(1);
         }
 
         .contact-section h2 {
+            transform: scale(1 / 1.5) scale(1);
             margin-bottom: 0.5rem;
             font-size: 1.5rem;
         }
 
         .contact-section p {
+            transform: scale(1 / 1.5) scale(1);
             margin-bottom: 1rem;
             font-size: 1rem;
         }
 
         .contact-button {
+            transform: scale(1 / 1.5) scale(1);
+
             display: inline-flex;
             align-items: center;
             background: var(--clr-accent);
@@ -412,6 +437,8 @@
         }
 
         .contact-button img.contact-icon {
+            transform: scale(1 / 1.5) scale(1);
+
             width: 24px;
             height: 24px;
             margin-right: 8px;
@@ -419,11 +446,15 @@
         }
 
         .contact-button:hover {
+            transform: scale(1 / 1.5) scale(1);
+
             background: var(--clr-secondary);
             transform: translateY(-3px);
         }
 
         .contact-button:hover img.contact-icon {
+            transform: scale(1 / 1.5) scale(1);
+
             transform: rotate(20deg) scale(1.2);
         }
     </style>
@@ -450,21 +481,24 @@
         <p class="subtitle">A curated collection of Corina’s animal and landscape art.</p>
     </header>
 
-    <div class="container" id="gallery"></div>
-    <section class="contact-section">
-        <h2>✨Get in Touch✨</h2>
-        <p>Interested in a commission or print?</p>
-        <a href="mailto:hello@corina-art.com" class="contact-button">
-            <img src="assets/email.png" alt="Email icon" class="contact-icon">
-            Email Corina
-        </a>
-    </section>
+    <div class="zoom-wrapper">
+        <div class="container" id="gallery"></div>
 
-    <footer>
-        <p>Made with love by <a href="https://github.com/adrian-bartos" target="_blank" rel="noopener">Adrian</a> •
-            <span id="visits">1454</span> visitors
-        </p>
-    </footer>
+        <section class="contact-section">
+            <h2>✨Get in Touch✨</h2>
+            <p>Interested in a commission or print?</p>
+            <a href="mailto:hello@corina-art.com" class="contact-button">
+                <img src="assets/email.png" alt="Email icon" class="contact-icon">
+                Email Corina
+            </a>
+        </section>
+
+        <footer>
+            <p>Made with love by <a href="https://github.com/adrian-bartos" target="_blank" rel="noopener">Adrian</a> •
+                <span id="visits">1454</span> visitors
+            </p>
+        </footer>
+    </div>
 
     <div id="image-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
         <div id="image-modal-content">
@@ -475,7 +509,7 @@
             <button id="next-btn" aria-label="Next image">❯</button>
             <img id="modal-image" src="" alt="">
             <h3 id="modal-title"></h3>
-            <p id="modal-description"></p>
+            <!-- <p id="modal-description"></p> -->
         </div>
     </div>
 
@@ -515,7 +549,7 @@
         images.forEach((img, idx) => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><h3>${img.title}</h3><p>${img.description}</p>`;
+            card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><p style="font-size: 0.8rem;">${img.title}</p>`;
             card.addEventListener('click', () => openModal(idx));
             gallery.appendChild(card);
         });
@@ -523,14 +557,14 @@
         const modal = document.getElementById('image-modal');
         const modalImg = document.getElementById('modal-image');
         const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-description');
+        //const modalDesc = document.getElementById('modal-description');
         let currentIndex = 0;
 
         function openModal(idx) {
             currentIndex = idx;
             modalImg.src = `assets/${images[idx].filename}`;
             modalTitle.textContent = images[idx].title;
-            modalDesc.textContent = images[idx].description;
+            //modalDesc.textContent = images[idx].description;
             modal.style.display = 'flex';
             requestAnimationFrame(() => modal.classList.add('show'));
             document.body.classList.add('no-scroll')

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Corina’s Art Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #121212;
+            color: #fff;
+        }
+
+        :root {
+            --clr-bg-dark-start: #121212;
+            --clr-bg-dark-end: #1f1f1f;
+            --clr-bg-light-start: #f0f0f0;
+            --clr-bg-light-end: #dcdcdc;
+            --clr-accent: #00bfff;
+            --clr-secondary: #ff4081;
+            --clr-text-dark: #ffffff;
+            --clr-text-light: #121212;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--clr-bg-dark-start), var(--clr-bg-dark-end));
+            color: var(--clr-text-dark);
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            /* or your current pixel font */
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        a:not(.slideshow-button) {
+            color: #e52e71;
+            text-decoration: none;
+            position: relative;
+        }
+
+        a:not(.slideshow-button)::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ff8a00;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        a:not(.slideshow-button):hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 60vh;
+            object-fit: cover;
+            border: 4px solid #06232d;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
+        }
+
+        .slideshow-section {
+            text-align: center;
+            padding: 2rem;
+            background: #1e1e1e;
+        }
+
+        .slideshow-button {
+            display: inline-block;
+            background: #00bfff;
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .slideshow-button:hover {
+            background: #ff4081;
+            transform: translateY(-3px);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Corina’s Art Portfolio</h1>
+        <div class="links">
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+            <span>|</span>
+            <a href="https://etsy.com" target="_blank">Etsy</a>
+        </div>
+        <p class="subtitle">ceva ceva ceva.</p>
+    </header>
+
+    <div class="gallery" id="gallery"></div>
+
+    <section class="slideshow-section">
+        <a href="slideshow.html" class="slideshow-button">Go to Portfolio →</a>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="image-modal" role="dialog" aria-labelledby="modal-title"
+        aria-describedby="modal-description">
+        <div id="image-modal-content">
+            <button id="close-modal" aria-label="Close modal">
+                <img src="assets/close.png" alt="Close" style="width:50px; height:50px;">
+            </button>
+            <button id="prev-btn" aria-label="Previous image">❮</button>
+            <button id="next-btn" aria-label="Next image">❯</button>
+            <img id="modal-image" src="" alt="">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
+            { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
+            { filename: 'gallery-3.jpg', title: 'Lotus Leaves', description: 'Delicate lotus leaves and flowers on water.' },
+        ];
+
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-image');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        images.forEach(img => {
+            const imgElem = document.createElement('img');
+            imgElem.src = `assets/${img.filename}`;
+            imgElem.alt = img.title;
+            imgElem.addEventListener('click', () => {
+                modalImg.src = `assets/${img.filename}`;
+                modal.classList.add('active');
+            });
+            gallery.appendChild(imgElem);
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
