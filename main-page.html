@@ -57,13 +57,28 @@
 
         h1 {
             font-family: 'Press Start 2P', cursive;
-            /* pixel font, optional */
+            /* or your current pixel font */
             font-size: 2rem;
             background: linear-gradient(90deg, #ff8a00, #e52e71);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 2px;
             margin-bottom: 0.5rem;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
         }
 
         .links {
@@ -75,13 +90,32 @@
         }
 
         a {
+            position: relative;
             color: #e52e71;
             text-decoration: none;
             transition: color 0.3s;
         }
 
+        a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            /* adjust as needed */
+            width: 100%;
+            height: 2px;
+            background: #ff8a00;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
         a:hover {
-            text-decoration: underline;
             color: #ff8a00;
         }
 
@@ -114,34 +148,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .social-links {
-            text-align: center;
-            margin: .75rem 0 1.25rem;
-        }
-
-        .social-links a {
-            color: var(--clr-secondary);
-            margin: 0 10px;
-            text-decoration: none;
-            position: relative;
-        }
-
-        .social-links a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 100%;
-            height: 2px;
-            background: var(--clr-secondary);
-            transform: scaleX(0);
-            transition: transform .3s ease;
-        }
-
-        .social-links a:hover::after {
-            transform: scaleX(1);
         }
 
         .description {
