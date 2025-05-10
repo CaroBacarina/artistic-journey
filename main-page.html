@@ -112,6 +112,7 @@
         .container {
             display: grid;
             grid-template-columns: 1fr;
+            overflow-x: scroll;
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -130,6 +131,11 @@
             cursor: pointer;
             overflow: hidden;
             transition: transform .3s, box-shadow .3s, background .3s;
+        }
+
+        .card.in-view {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         body.light-mode .card {
@@ -161,6 +167,8 @@
         .card img.loaded {
             filter: blur(0);
         }
+
+
 
         #image-modal {
             display: none;
@@ -513,6 +521,26 @@
                 }
             }
         }
+        const cards = document.querySelectorAll('.card');
+
+        function checkInView() {
+            const triggerPoint = window.innerWidth; // full width of screen
+
+            cards.forEach(card => {
+                const cardLeft = card.getBoundingClientRect().left;
+                const cardRight = card.getBoundingClientRect().right;
+
+                if (cardLeft < triggerPoint && cardRight > 0) {
+                    card.classList.add('in-view');
+                } else {
+                    card.classList.remove('in-view'); // optional: remove if you want it to re-animate
+                }
+            });
+        }
+
+
+        document.querySelector('.container').addEventListener('scroll', checkInView);
+        window.addEventListener('load', checkInView);
 
         document.getElementById('prev-btn').addEventListener('click', () => openModal((currentIndex - 1 + images.length) % images.length));
         document.getElementById('next-btn').addEventListener('click', () => openModal((currentIndex + 1) % images.length));
