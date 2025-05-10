@@ -3,17 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Corina’s Art Portfolio</title>
     <meta name="description" content="A curated collection of Corina’s animal and landscape art.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <p style="text-align:center;">
-        ✨
-        <a href="https://instagram.com/corina.art" target="_blank" style="color:#ff4081; margin: 0 10px;">Instagram</a>
-        |
-        <a href="https://etsy.com/shop/corinaart" target="_blank" style="color:#ff4081; margin: 0 10px;">Etsy</a>
-        ✨
-    </p>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         body {
             background: linear-gradient(135deg, #121212, #1f1f1f);
@@ -61,8 +54,7 @@
             margin-bottom: 0.5rem;
         }
 
-        .dark-light-toggle,
-        .music-toggle {
+        .dark-light-toggle, .music-toggle {
             position: fixed;
             background: #272727;
             border: none;
@@ -72,15 +64,8 @@
             cursor: pointer;
         }
 
-        .dark-light-toggle {
-            top: 20px;
-            right: 20px;
-        }
-
-        .music-toggle {
-            bottom: 20px;
-            right: 20px;
-        }
+        .dark-light-toggle { top: 20px; right: 20px; }
+        .music-toggle { bottom: 20px; right: 20px; }
 
         .light-mode {
             background: linear-gradient(135deg, #f0f0f0, #dcdcdc);
@@ -93,21 +78,58 @@
         }
 
         @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         footer {
             text-align: center;
             margin-top: 2rem;
             font-size: 0.8rem;
+        }
+
+        /* Modal styles */
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #image-modal-content {
+            background: #1e1e1e;
+            padding: 1rem;
+            border-radius: 12px;
+            max-width: 90%;
+            max-height: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        #image-modal-content img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        #image-modal-content h3, #image-modal-content p {
+            margin: 0.5rem 0;
+        }
+
+        #close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -120,14 +142,30 @@
     <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
 
     <h1>Corina’s Art Portfolio</h1>
+    <p style="text-align:center;">
+        ✨ 
+        <a href="https://instagram.com/corina.art" target="_blank" style="color:#ff4081; margin:0 10px;">Instagram</a> 
+        | 
+        <a href="https://etsy.com/shop/corinaart" target="_blank" style="color:#ff4081; margin:0 10px;">Etsy</a> 
+        ✨
+    </p>
     <p style="text-align:center;">A curated collection of Corina’s animal and landscape art.</p>
 
     <div class="container" id="gallery"></div>
 
     <footer>
-        <p>✨ Made with love by Corina ✨ | <a href="https://instagram.com/corina.art" target="_blank">Instagram</a> | <a
-                href="https://etsy.com/shop/corinaart" target="_blank">Etsy</a></p>
+        <p>Made with love by Corina</p>
     </footer>
+
+    <!-- Modal -->
+    <div id="image-modal">
+        <div id="image-modal-content">
+            <button id="close-modal" onclick="closeModal()">❌</button>
+            <img id="modal-image" src="" alt="">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+        </div>
+    </div>
 
     <script>
         function toggleTheme() {
@@ -146,11 +184,17 @@
             }
         }
 
-        function viewImage(imageUrl) {
-            window.open(imageUrl, '_blank');
+        function viewImage(imageUrl, title, description) {
+            document.getElementById('modal-image').src = imageUrl;
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-description').textContent = description;
+            document.getElementById('image-modal').style.display = 'flex';
         }
 
-        // Manually list the image filenames here:
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+
         const images = [
             { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
             { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
@@ -179,7 +223,7 @@
         images.forEach(img => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.onclick = () => viewImage(`assets/${img.filename}`);
+            card.onclick = () => viewImage(`assets/${img.filename}`, img.title, img.description);
             card.innerHTML = `
                 <img src="assets/${img.filename}" alt="${img.title}">
                 <h3>${img.title}</h3>
