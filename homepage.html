@@ -5,20 +5,16 @@
     <meta charset="UTF-8">
     <title>Corina’s Art Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: #121212;
-            color: #fff;
-        }
-
         :root {
             --clr-bg-dark-start: #121212;
             --clr-bg-dark-end: #1f1f1f;
             --clr-bg-light-start: #f0f0f0;
             --clr-bg-light-end: #dcdcdc;
+            --clr-surface-dark: #1e1e1e;
+            --clr-surface-light: #ffffff;
             --clr-accent: #00bfff;
             --clr-secondary: #ff4081;
             --clr-text-dark: #ffffff;
@@ -37,6 +33,7 @@
             color: var(--clr-text-dark);
             padding: 1rem;
             overflow-x: hidden;
+            transition: background .5s, color .5s;
         }
 
         header {
@@ -70,20 +67,22 @@
             }
         }
 
+
         .links {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
         }
 
-        a:not(.slideshow-button) {
+        a:not(.portfolio-button) {
             color: #e52e71;
             text-decoration: none;
             position: relative;
         }
 
-        a:not(.slideshow-button)::after {
+        a:not(.portfolio-button)::after {
             content: '';
             position: absolute;
             bottom: -2px;
@@ -96,7 +95,7 @@
             transition: transform 0.3s ease;
         }
 
-        a:not(.slideshow-button):hover::after {
+        a:hover::after {
             transform: scaleX(1);
             transform-origin: left;
         }
@@ -112,8 +111,9 @@
             width: 100%;
             height: 60vh;
             object-fit: cover;
-            border: 4px solid #06232d;
+            border: 2px solid #06232d;
             cursor: pointer;
+            box-shadow: #06232d 0px 0px 20px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -122,29 +122,24 @@
             box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
         }
 
-        .slideshow-section {
-            text-align: center;
-            padding: 2rem;
-            background: #1e1e1e;
-        }
-
-        .slideshow-button {
-            display: inline-block;
-            background: #00bfff;
+        /* Remove fixed position from individual buttons */
+        .dark-light-toggle,
+        .music-toggle {
+            position: static;
+            background: #272727;
+            border: none;
             color: #fff;
-            padding: 0.75rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: background 0.3s, transform 0.2s;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .3);
         }
 
-        .slideshow-button:hover {
-            background: #ff4081;
-            transform: translateY(-3px);
+        .dark-light-toggle {
+            top: 20px;
+            right: 20px;
         }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -177,43 +172,67 @@
             border: none;
             cursor: pointer;
         }
+
+        .portfolio-button {
+            display: block;
+            margin: 2rem auto;
+            background: #00bfff;
+            color: #fff;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            text-align: center;
+            transition: background 0.3s, transform 0.2s;
+            width: fit-content;
+        }
+
+        .portfolio-button:hover {
+            background: #ff4081;
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 
 <body>
+    <audio id="background-music" autoplay loop>
+        <source src="assets/theme.mp3" type="audio/mpeg">
+    </audio>
+    <div>
+        <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
+        <button class="music-toggle" onclick="toggleMusic()">🔇</button>
+    </div>
 
     <header>
         <h1>Corina’s Art Portfolio</h1>
         <div class="links">
-            <a href="https://instagram.com" target="_blank">Instagram</a>
-            <span>|</span>
-            <a href="https://etsy.com" target="_blank">Etsy</a>
+            ✨ <a href="https://instagram.com" target="_blank">Instagram</a> |
+            <a href="https://etsy.com" target="_blank">Etsy</a> ✨
         </div>
-        <p class="subtitle">ceva ceva ceva.</p>
+        <p class="subtitle">A curated collection of Corina’s animal and landscape art.</p>
     </header>
 
     <div class="gallery" id="gallery"></div>
 
-    <section class="slideshow-section">
-        <a href="slideshow.html" class="slideshow-button">Go to Portfolio →</a>
-    </section>
+    <!-- NEW BUTTON BELOW GALLERY -->
+    <a href="portofolio.html" class="portfolio-button">Go to Portfolio →</a>
 
-    <!-- Modal -->
-    <div class="modal" id="image-modal" role="dialog" aria-labelledby="modal-title"
-        aria-describedby="modal-description">
-        <div id="image-modal-content">
-            <button id="close-modal" aria-label="Close modal">
-                <img src="assets/close.png" alt="Close" style="width:50px; height:50px;">
-            </button>
-            <button id="prev-btn" aria-label="Previous image">❮</button>
-            <button id="next-btn" aria-label="Next image">❯</button>
-            <img id="modal-image" src="" alt="">
-            <h3 id="modal-title"></h3>
-            <p id="modal-description"></p>
-        </div>
+    <div class="modal" id="image-modal">
+        <button id="close-modal" class="close-btn">&times;</button>
+        <img id="modal-image" src="" alt="">
     </div>
 
     <script>
+
+        const music = document.getElementById('background-music');
+        const musicBtn = document.querySelector('.music-toggle');
+        const themeBtn = document.querySelector('.dark-light-toggle');
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+        function toggleMusic() { music.paused ? (music.play(), musicBtn.textContent = '🔊') : (music.pause(), musicBtn.textContent = '🔇'); }
+
         const images = [
             { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
             { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
@@ -245,8 +264,19 @@
                 modal.classList.remove('active');
             }
         });
-    </script>
 
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
 </body>
 
 </html>

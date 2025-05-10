@@ -486,7 +486,7 @@
 
         <section class="contact-section">
             <h2>✨Get in Touch✨</h2>
-            <p>Interested in a commission or print?</p>
+            <p>If you’d like to say hello or have any questions about my artwork, don’t be shy!</p>
             <a href="mailto:hello@corina-art.com" class="contact-button">
                 <img src="assets/email.png" alt="Email icon" class="contact-icon">
                 Email Corina
@@ -508,7 +508,7 @@
             <button id="prev-btn" aria-label="Previous image">❮</button>
             <button id="next-btn" aria-label="Next image">❯</button>
             <img id="modal-image" src="" alt="">
-            <h3 id="modal-title"></h3>
+            <p id="modal-title"></p>
             <!-- <p id="modal-description"></p> -->
         </div>
     </div>
@@ -524,7 +524,7 @@
         function toggleMusic() { music.paused ? (music.play(), musicBtn.textContent = '🔊') : (music.pause(), musicBtn.textContent = '🔇'); }
 
         const images = [
-            { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
+            { filename: 'gallery-1.jpg', title: 'Mr. Jones, 25x46cm, crayon', description: 'A cozy cat resting in a nest of flowers.' },
             { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
             { filename: 'gallery-3.jpg', title: 'Lotus Leaves', description: 'Delicate lotus leaves and flowers on water.' },
             { filename: 'gallery-4.jpg', title: 'Festival Scene', description: 'A lively festival with dancers and musicians.' },
@@ -549,7 +549,7 @@
         images.forEach((img, idx) => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><p style="font-size: 0.8rem;">${img.title}</p>`;
+            card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><p style="font-size: 0.6rem;">${img.title}</p>`;
             card.addEventListener('click', () => openModal(idx));
             gallery.appendChild(card);
         });
