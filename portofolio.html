@@ -608,6 +608,8 @@
             visitsEl.textContent = randomVisits;
         });
 
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
         document.getElementById('prev-btn').addEventListener('click', () => openModal((currentIndex - 1 + images.length) % images.length));
         document.getElementById('next-btn').addEventListener('click', () => openModal((currentIndex + 1) % images.length));
     </script>
