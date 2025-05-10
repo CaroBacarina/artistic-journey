@@ -568,6 +568,8 @@
             modal.style.display = 'flex';
             requestAnimationFrame(() => modal.classList.add('show'));
             document.body.classList.add('no-scroll')
+            document.addEventListener('contextmenu', event => event.preventDefault());
+
         }
         function closeModal() {
             modal.classList.remove('show');
