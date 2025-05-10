@@ -122,24 +122,6 @@
             box-shadow: 0 0 20px rgba(0, 191, 255, 0.6);
         }
 
-        /* Remove fixed position from individual buttons */
-        .dark-light-toggle,
-        .music-toggle {
-            position: static;
-            background: #272727;
-            border: none;
-            color: #fff;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-        }
-
-        .dark-light-toggle {
-            top: 20px;
-            right: 20px;
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -190,6 +172,11 @@
         .portfolio-button:hover {
             background: #ff4081;
             transform: translateY(-3px);
+        }
+
+        .gallery img:focus,
+        .gallery img:active {
+            outline: none;
         }
     </style>
 </head>
