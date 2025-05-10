@@ -29,6 +29,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
+            -webkit-font-smoothing: antialiased;
             background: linear-gradient(135deg, var(--clr-bg-dark-start), var(--clr-bg-dark-end));
             color: var(--clr-text-dark);
             padding: 1rem;
@@ -46,31 +47,72 @@
             color: var(--clr-text-light);
         }
 
-        h1 {
+        header {
             text-align: center;
-            top: -20px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s forwards;
+            padding: 1rem;
+        }
+
+        h1 {
             font-family: 'Press Start 2P', cursive;
-            font-size: clamp(1.5rem, 5vw, 2rem);
-            animation: bounce 2s infinite;
-            line-height: 1.3;
+            /* pixel font, optional */
+            font-size: 2rem;
+            background: linear-gradient(90deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                margin-top: 40px;
-                /* push title down only on mobile */
+        .links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        a {
+            color: #e52e71;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #ff8a00;
+        }
+
+        .sparkle {
+            display: inline-block;
+            animation: sparkle 1.5s infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .divider {
+            color: #999;
+        }
+
+        @keyframes sparkle {
+            from {
+                transform: rotate(0deg) scale(1);
+            }
+
+            to {
+                transform: rotate(20deg) scale(1.2);
             }
         }
 
-        @keyframes bounce {
-
-            0%,
-            100% {
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
                 transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
             }
         }
 
@@ -390,12 +432,17 @@
         <button class="music-toggle" onclick="toggleMusic()">🔇</button>
     </div>
 
-    <h1>Corina’s Art Portfolio</h1>
-    <div class="social-links">
-        ✨ <a href="https://instagram.com/corina.art" target="_blank">Instagram</a> |
-        <a href="https://etsy.com/shop/corinaart" target="_blank">Etsy</a> ✨
-    </div>
-    <p class="description">A curated collection of Corina’s animal and landscape art.</p>
+    <header>
+        <h1>Corina’s Art Portfolio</h1>
+        <div class="links">
+            <span class="sparkle">✨</span>
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <span class="divider">|</span>
+            <a href="https://etsy.com" target="_blank" rel="noopener">Etsy</a>
+            <span class="sparkle">✨</span>
+        </div>
+        <p class="subtitle">A curated collection of Corina’s animal and landscape art.</p>
+    </header>
 
     <div class="container" id="gallery"></div>
     <section class="contact-section">
