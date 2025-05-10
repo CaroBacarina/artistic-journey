@@ -114,7 +114,7 @@
             border: 2px solid #06232d;
             cursor: pointer;
             box-shadow: #06232d 0px 0px 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            /* transition: transform 0.3s, box-shadow 0.3s; */
         }
 
         .gallery img:hover {
@@ -195,14 +195,6 @@
 </head>
 
 <body>
-    <audio id="background-music" autoplay loop>
-        <source src="assets/theme.mp3" type="audio/mpeg">
-    </audio>
-    <div>
-        <button class="dark-light-toggle" onclick="toggleTheme()">🌙</button>
-        <button class="music-toggle" onclick="toggleMusic()">🔇</button>
-    </div>
-
     <header>
         <h1>Corina’s Art Portfolio</h1>
         <div class="links">
@@ -267,14 +259,6 @@
 
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
-        }
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-            } else {
-                music.pause();
-            }
         }
     </script>
 </body>
