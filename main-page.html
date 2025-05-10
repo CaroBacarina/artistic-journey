@@ -112,7 +112,6 @@
         .container {
             display: grid;
             grid-template-columns: 1fr;
-            overflow-x: scroll;
             gap: 1rem;
             margin-top: 2rem;
         }
@@ -131,11 +130,6 @@
             cursor: pointer;
             overflow: hidden;
             transition: transform .3s, box-shadow .3s, background .3s;
-        }
-
-        .card.in-view {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         body.light-mode .card {
@@ -167,8 +161,6 @@
         .card img.loaded {
             filter: blur(0);
         }
-
-
 
         #image-modal {
             display: none;
@@ -407,144 +399,128 @@
 
     <div class="container" id="gallery"></div>
 
-    <section class="contact-section">
-        <h2>✨Get in Touch✨</h2>
-        <p>Interested in a commission or print?</p>
-        <a href="mailto:hello@corina-art.com" class="contact-button">
-            <img src="assets/email.png" alt="Email icon" class="contact-icon">
-            Email Corina
-        </a>
-    </section>
+    <section style="text-align:center;margin-top:3rem;">
+        <h2 style="margin-bottom:.5rem;font-size:1.25rem;">Get in touch</h2>
+        <p>Interested in a commission or print? <a href="mailto:hello@corina-art.com"
+                style="color:var(--clr-accent);">Email Corina</a></p>
+        <section class="contact-section">
+            <h2>✨Get in Touch✨</h2>
+            <p>Interested in a commission or print?</p>
+            <a href="mailto:hello@corina-art.com" class="contact-button">
+                <img src="assets/email.png" alt="Email icon" class="contact-icon">
+                Email Corina
+            </a>
+        </section>
 
-    <footer>
-        <p>Made with love by Corina • <span id="visits">1454</span> visitors</p>
-    </footer>
+        <footer>
+            <p>Made with love by Corina • <span id="visits">1454</span> visitors</p>
+        </footer>
 
-    <div id="image-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
-        <div id="image-modal-content">
-            <button id="close-modal" aria-label="Close modal">
-                <img src="assets/close.png" alt="Close" style="width:50px; height:50px;">
-            </button>
-            <button id="prev-btn" aria-label="Previous image">❮</button>
-            <button id="next-btn" aria-label="Next image">❯</button>
-            <img id="modal-image" src="" alt="">
-            <h3 id="modal-title"></h3>
-            <p id="modal-description"></p>
+        <div id="image-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+            <div id="image-modal-content">
+                <button id="close-modal" aria-label="Close modal">
+                    <img src="assets/close.png" alt="Close" style="width:50px; height:50px;">
+                </button>
+                <button id="prev-btn" aria-label="Previous image">❮</button>
+                <button id="next-btn" aria-label="Next image">❯</button>
+                <img id="modal-image" src="" alt="">
+                <h3 id="modal-title"></h3>
+                <p id="modal-description"></p>
+            </div>
         </div>
-    </div>
 
-    <script>
-        const music = document.getElementById('background-music');
-        const musicBtn = document.querySelector('.music-toggle');
-        const themeBtn = document.querySelector('.dark-light-toggle');
+        <script>
+            const music = document.getElementById('background-music');
+            const musicBtn = document.querySelector('.music-toggle');
+            const themeBtn = document.querySelector('.dark-light-toggle');
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-        }
-        function toggleMusic() { music.paused ? (music.play(), musicBtn.textContent = '🔊') : (music.pause(), musicBtn.textContent = '🔇'); }
+            function toggleTheme() {
+                document.body.classList.toggle('light-mode');
+            }
+            function toggleMusic() { music.paused ? (music.play(), musicBtn.textContent = '🔊') : (music.pause(), musicBtn.textContent = '🔇'); }
 
-        const images = [
-            { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
-            { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
-            { filename: 'gallery-3.jpg', title: 'Lotus Leaves', description: 'Delicate lotus leaves and flowers on water.' },
-            { filename: 'gallery-4.jpg', title: 'Festival Scene', description: 'A lively festival with dancers and musicians.' },
-            { filename: 'gallery-5.jpg', title: 'Red Dragon', description: 'A striking red dragon with dynamic details.' },
-            { filename: 'gallery-6.jpg', title: 'Blossoming Tree', description: 'A tree in full bloom with pink flowers.' },
-            { filename: 'gallery-7.jpg', title: 'Still Life with Oranges', description: 'A soft still life composition of fruits.' },
-            { filename: 'gallery-8.jpg', title: 'Playful Cat', description: 'A bright orange cat with a playful expression.' },
-            { filename: 'gallery-9.jpg', title: 'Pink Roses', description: 'A delicate arrangement of pink roses.' },
-            { filename: 'gallery-10.jpg', title: 'Garden Cat', description: 'A cat enjoying the garden surrounded by flowers.' },
-            { filename: 'gallery-11.jpg', title: 'Field Cat', description: 'A curious cat in a sunlit meadow.' },
-            { filename: 'gallery-12.jpg', title: 'City Sunset', description: 'A dramatic sunset over a city skyline.' },
-            { filename: 'gallery-13.jpg', title: 'Monochrome Cat', description: 'A cat captured in a grayscale drawing.' },
-            { filename: 'gallery-14.jpg', title: 'Minimal Tree', description: 'A minimalist tree silhouette on white.' },
-            { filename: 'gallery-15.jpg', title: 'Forest Path', description: 'A serene path through a lush forest.' },
-            { filename: 'gallery-16.jpg', title: 'Festival Performer', description: 'A colorful festival performer portrait.' },
-            { filename: 'sarutul-1.jpg', title: 'The Kiss I', description: 'An artistic interpretation of The Kiss.' },
-            // { filename: 'sarutul-2.jpg', title: 'The Kiss II', description: 'A golden romantic embrace.' },
-            // { filename: 'sarutul-3.jpg', title: 'The Kiss III', description: 'A vibrant take on a classic love scene.' },
-            // { filename: 'sarutul-4.jpg', title: 'The Kiss IV', description: 'A colorful mosaic of love and art.' }
-        ];
-        const gallery = document.getElementById('gallery');
-        images.forEach((img, idx) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><h3>${img.title}</h3><p>${img.description}</p>`;
-            card.addEventListener('click', () => openModal(idx));
-            gallery.appendChild(card);
-        });
+            const images = [
+                { filename: 'gallery-1.jpg', title: 'Sleeping Cat', description: 'A cozy cat resting in a nest of flowers.' },
+                { filename: 'gallery-2.jpg', title: 'Goldfish Pond', description: 'A vibrant underwater scene with goldfish.' },
+                { filename: 'gallery-3.jpg', title: 'Lotus Leaves', description: 'Delicate lotus leaves and flowers on water.' },
+                { filename: 'gallery-4.jpg', title: 'Festival Scene', description: 'A lively festival with dancers and musicians.' },
+                { filename: 'gallery-5.jpg', title: 'Red Dragon', description: 'A striking red dragon with dynamic details.' },
+                { filename: 'gallery-6.jpg', title: 'Blossoming Tree', description: 'A tree in full bloom with pink flowers.' },
+                { filename: 'gallery-7.jpg', title: 'Still Life with Oranges', description: 'A soft still life composition of fruits.' },
+                { filename: 'gallery-8.jpg', title: 'Playful Cat', description: 'A bright orange cat with a playful expression.' },
+                { filename: 'gallery-9.jpg', title: 'Pink Roses', description: 'A delicate arrangement of pink roses.' },
+                { filename: 'gallery-10.jpg', title: 'Garden Cat', description: 'A cat enjoying the garden surrounded by flowers.' },
+                { filename: 'gallery-11.jpg', title: 'Field Cat', description: 'A curious cat in a sunlit meadow.' },
+                { filename: 'gallery-12.jpg', title: 'City Sunset', description: 'A dramatic sunset over a city skyline.' },
+                { filename: 'gallery-13.jpg', title: 'Monochrome Cat', description: 'A cat captured in a grayscale drawing.' },
+                { filename: 'gallery-14.jpg', title: 'Minimal Tree', description: 'A minimalist tree silhouette on white.' },
+                { filename: 'gallery-15.jpg', title: 'Forest Path', description: 'A serene path through a lush forest.' },
+                { filename: 'gallery-16.jpg', title: 'Festival Performer', description: 'A colorful festival performer portrait.' },
+                { filename: 'sarutul-1.jpg', title: 'The Kiss I', description: 'An artistic interpretation of The Kiss.' },
+                // { filename: 'sarutul-2.jpg', title: 'The Kiss II', description: 'A golden romantic embrace.' },
+                // { filename: 'sarutul-3.jpg', title: 'The Kiss III', description: 'A vibrant take on a classic love scene.' },
+                // { filename: 'sarutul-4.jpg', title: 'The Kiss IV', description: 'A colorful mosaic of love and art.' }
+            ];
+            const gallery = document.getElementById('gallery');
+            images.forEach((img, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<img src="assets/${img.filename}" alt="${img.title}"><h3>${img.title}</h3><p>${img.description}</p>`;
+                card.addEventListener('click', () => openModal(idx));
+                gallery.appendChild(card);
+            });
 
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById('modal-image');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-description');
-        let currentIndex = 0;
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-description');
+            let currentIndex = 0;
 
-        function openModal(idx) {
-            currentIndex = idx;
-            modalImg.src = `assets/${images[idx].filename}`;
-            modalTitle.textContent = images[idx].title;
-            modalDesc.textContent = images[idx].description;
-            modal.style.display = 'flex';
-            requestAnimationFrame(() => modal.classList.add('show'));
-            document.body.classList.add('no-scroll')
-        }
-        function closeModal() {
-            modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 300);
-            document.body.classList.remove('no-scroll');
-        }
-        document.getElementById('close-modal').addEventListener('click', closeModal);
-        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            function openModal(idx) {
+                currentIndex = idx;
+                modalImg.src = `assets/${images[idx].filename}`;
+                modalTitle.textContent = images[idx].title;
+                modalDesc.textContent = images[idx].description;
+                modal.style.display = 'flex';
+                requestAnimationFrame(() => modal.classList.add('show'));
+                document.body.classList.add('no-scroll')
+            }
+            function closeModal() {
+                modal.classList.remove('show');
+                setTimeout(() => modal.style.display = 'none', 300);
+                document.body.classList.remove('no-scroll');
+            }
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
-        let touchStartX = 0;
-        let touchEndX = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
 
-        modal.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
+            modal.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
 
-        modal.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleGesture();
-        }, false);
+            modal.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleGesture();
+            }, false);
 
-        function handleGesture() {
-            const swipeDistance = touchEndX - touchStartX;
-            if (Math.abs(swipeDistance) > 50) {  // minimum swipe distance
-                if (swipeDistance > 0) {
-                    // Swipe right → previous image
-                    openModal((currentIndex - 1 + images.length) % images.length);
-                } else {
-                    // Swipe left → next image
-                    openModal((currentIndex + 1) % images.length);
+            function handleGesture() {
+                const swipeDistance = touchEndX - touchStartX;
+                if (Math.abs(swipeDistance) > 50) {  // minimum swipe distance
+                    if (swipeDistance > 0) {
+                        // Swipe right → previous image
+                        openModal((currentIndex - 1 + images.length) % images.length);
+                    } else {
+                        // Swipe left → next image
+                        openModal((currentIndex + 1) % images.length);
+                    }
                 }
             }
-        }
-        const cards = document.querySelectorAll('.card');
 
-        function checkInView() {
-            const triggerPoint = window.innerWidth; // full width of screen
-
-            cards.forEach(card => {
-                const cardLeft = card.getBoundingClientRect().left;
-                const cardRight = card.getBoundingClientRect().right;
-
-                if (cardLeft < triggerPoint && cardRight > 0) {
-                    card.classList.add('in-view');
-                } else {
-                    card.classList.remove('in-view'); // optional: remove if you want it to re-animate
-                }
-            });
-        }
-
-
-        document.querySelector('.container').addEventListener('scroll', checkInView);
-        window.addEventListener('load', checkInView);
-
-        document.getElementById('prev-btn').addEventListener('click', () => openModal((currentIndex - 1 + images.length) % images.length));
-        document.getElementById('next-btn').addEventListener('click', () => openModal((currentIndex + 1) % images.length));
-    </script>
+            document.getElementById('prev-btn').addEventListener('click', () => openModal((currentIndex - 1 + images.length) % images.length));
+            document.getElementById('next-btn').addEventListener('click', () => openModal((currentIndex + 1) % images.length));
+        </script>
 </body>
 
-</html>
+</html
