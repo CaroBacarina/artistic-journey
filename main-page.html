@@ -36,6 +36,11 @@
             transition: background .5s, color .5s;
         }
 
+        body.no-scroll {
+            overflow: hidden;
+            height: 100%;
+        }
+
         body.light-mode {
             background: linear-gradient(135deg, var(--clr-bg-light-start), var(--clr-bg-light-end));
             color: var(--clr-text-light);
@@ -43,6 +48,7 @@
 
         h1 {
             text-align: center;
+            top: -20px;
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(1.5rem, 5vw, 2rem);
             animation: bounce 2s infinite;
@@ -199,12 +205,34 @@
 
         #close-modal {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--clr-secondary);
-            border-radius: 50%;
-            padding: 10px;
-            font-size: 2rem;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #close-modal img {
+            width: 25px;
+            /* adjust size as you like */
+            height: 25px;
+            display: block;
+            pointer-events: none;
+            /* make sure only button responds to clicks */
+        }
+
+        /* Hover effect */
+        #close-modal:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+        }
+
+        /* Click (active) effect */
+        #close-modal:active {
+            transform: scale(0.9);
+            opacity: 0.7;
         }
 
         #prev-btn,
@@ -319,7 +347,9 @@
 
     <div id="image-modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
         <div id="image-modal-content">
-            <button id="close-modal" aria-label="Close modal">❌</button>
+            <button id="close-modal" aria-label="Close modal">
+                <img src="assets/close.png" alt="Close" style="width:50px; height:50px;">
+            </button>
             <button id="prev-btn" aria-label="Previous image">❮</button>
             <button id="next-btn" aria-label="Next image">❯</button>
             <img id="modal-image" src="" alt="">
@@ -382,10 +412,12 @@
             modalDesc.textContent = images[idx].description;
             modal.style.display = 'flex';
             requestAnimationFrame(() => modal.classList.add('show'));
+            document.body.classList.add('no-scroll')
         }
         function closeModal() {
             modal.classList.remove('show');
             setTimeout(() => modal.style.display = 'none', 300);
+            document.body.classList.remove('no-scroll');
         }
         document.getElementById('close-modal').addEventListener('click', closeModal);
         modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
