@@ -89,14 +89,14 @@
             margin-bottom: 0.5rem;
         }
 
-        a {
+        a:not(.contact-button) {
             position: relative;
             color: #e52e71;
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        a::after {
+        a:not(.contact-button)::after {
             content: '';
             position: absolute;
             left: 0;
@@ -110,12 +110,12 @@
             transition: transform 0.3s ease;
         }
 
-        a:hover::after {
+        a:not(.contact-button):hover::after {
             transform: scaleX(1);
             transform-origin: left;
         }
 
-        a:hover {
+        a:not(.contact-button):hover {
             color: #ff8a00;
         }
 
